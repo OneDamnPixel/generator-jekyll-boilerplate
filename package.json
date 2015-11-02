@@ -1,0 +1,22 @@
+{
+  "name": "generator-jekyll-boilerplate",
+  "version": "1.0.0",
+  "description": "Jekyll boilerplate Yeoman generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OneDamnPixel/generator-jekyll-boilerplate.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OneDamnPixel/generator-jekyll-boilerplate/issues"
+  },
+  "homepage": "https://github.com/OneDamnPixel/generator-jekyll-boilerplate#readme",
+  "dependencies": {
+    "yeoman-generator": "^0.21.1"
+  }
+}
