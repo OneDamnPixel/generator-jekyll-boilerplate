@@ -1,5 +1,3 @@
-# Need to make all of these user options in Yeoman
-
 # Site settings
 title: <%= projectName %>
 email: <%= authorEmail %>
