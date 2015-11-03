@@ -1,4 +1,5 @@
 var generators = require('yeoman-generator');
+var mkdirp = require('mkdirp');
 
 module.exports = generators.Base.extend({
 
@@ -6,7 +7,13 @@ module.exports = generators.Base.extend({
     generators.Base.apply(this, arguments);
 
     // Add command line arguments here
-    //this.argument('appname', { type: String, required: true });
+
+    // Uncomment this and Yeoman will allow for a blank name (allows you to use the current working directory)
+    //this.argument('appname', {
+    //  desc: 'The applications name. Cannot be blank.',
+    //  required: false,
+    //  type: String
+    //});
 
     // Add command line options here
     // this.option('scss'); // If you include --scss in the command line, the generator can use this.options.scss to do stuff (returns true/false)
@@ -21,48 +28,17 @@ module.exports = generators.Base.extend({
   initializing: {},
 
   prompting: function() {
-    //var done = this.async();
-    //
-    //this.prompt([{
-    //    type    : 'input',
-    //    name    : 'appname',
-    //    message : 'Your project name',
-    //    default : this.appname // Default to current folder name
-    //  }, {
-    //    type    : 'input',
-    //    name    : 'username',
-    //    message : 'What\'s your Github username',
-    //    store   : true // Remembers the last thing the user entered for this question
-    //  }, {
-    //    type    : 'list',
-    //    name    : 'preprocessor',
-    //    message : 'Do you want to use a CSS preprocessor?',
-    //    choices: [
-    //      "LESS",
-    //      "Stylus",
-    //      "SCSS",
-    //      "None"
-    //    ]
-    //  }], function (answers) {
-    //    this.log(answers.appname); // this = generator
-    //    this.log(answers.username);
-    //    this.log(answers.preprocessor);
-    //
-    //    // Way to confirm if all of the settings are correct
-    //    this.prompt([{
-    //        type    : 'confirm',
-    //        name    : 'confirmation',
-    //        message : 'Does this all look good?'
-    //      }], function (answers) {
-    //        if (!answers.confirmation) {
-    //          this.log("You said NO!" + answers.confirmation);
-    //        } else {
-    //          this.log("You said YES!" + answers.confirmation);
-    //        }
-    //
-    //        done();
-    //    }.bind(this));
-    //}.bind(this)); // Binds the generator to the above 'this'
+    var done = this.async();
+
+    this.prompt({
+      type    : 'input',
+      name    : 'appname',
+      message : 'Your project name',
+      default : 'jekyll-boilerplate'
+    }, function (answers) {
+      this.appname = answers.appname.replace(/\s+/g, '-').toLowerCase(); // Convert to lower case and dash separated name
+      done();
+    }.bind(this));
   },
 
   configuring: {},
@@ -71,11 +47,73 @@ module.exports = generators.Base.extend({
 
   writing: function () {
 
-    //this.fs.copyTpl(
-    //  this.templatePath('index.html'),
-    //  this.destinationPath('./index.html'),
-    //  { title: 'Templating with Yeoman' }
-    //);
+    mkdirp('./' + this.appname + '/_posts');
+    mkdirp('./' + this.appname + '/_sass');
+    mkdirp('./' + this.appname + '/css');
+
+    // Includes
+    this.fs.copyTpl(
+      this.templatePath('_includes/head.html'),
+      this.destinationPath('./' + this.appname + '/_includes/head.html'),
+      {}
+    );
+
+
+
+    // Layouts
+    this.fs.copyTpl(
+      this.templatePath('_layouts/default.html'),
+      this.destinationPath('./' + this.appname + '/_layouts/default.html'),
+      {}
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('_layouts/page.html'),
+      this.destinationPath('./' + this.appname + '/_layouts/page.html'),
+      {}
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('_layouts/page.html'),
+      this.destinationPath('./' + this.appname + '/_layouts/page.html'),
+      {}
+    );
+
+
+
+    // Posts
+    this.fs.copyTpl(
+      this.templatePath('_layouts/default.html'),
+      this.destinationPath('./' + this.appname + '/_layouts/default.html'),
+      {}
+    );
+
+
+
+    // Root
+    this.fs.copyTpl(
+      this.templatePath('.gitignore'),
+      this.destinationPath('./' + this.appname + '/.gitignore'),
+      {}
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('_config.yml'),
+      this.destinationPath('./' + this.appname + '/_config.yml'),
+      {}
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('feed.xml'),
+      this.destinationPath('./' + this.appname + '/feed.xml'),
+      {}
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('index.html'),
+      this.destinationPath('./' + this.appname + '/index.html'),
+      { title: 'Templating with Yeoman' }
+    );
 
   },
 
@@ -96,8 +134,6 @@ module.exports = generators.Base.extend({
 
   },
 
-  end: function () {
-    console.log('END');
-  }
+  end: function () {}
 
 });
