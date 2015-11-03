@@ -112,7 +112,7 @@ module.exports = generators.Base.extend({
     this.fs.copyTpl(
       this.templatePath('index.html'),
       this.destinationPath('./' + this.appname + '/index.html'),
-      { title: 'Templating with Yeoman' }
+      {}
     );
 
   },
